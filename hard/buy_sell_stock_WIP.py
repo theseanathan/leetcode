@@ -28,23 +28,13 @@ class Solution:
         if not prices:
             return max_profit
 
-        min_stock = prices[0]
-        min_stock_idx = 0
-        max_stock = 0
-        max_stock_idx = None
+        buy = prices[0]
 
-        for i in range(len(prices)):
-            price = prices[i]
-            if price <= min_stock:
-                min_stock = price
-                min_stock_idx = i
-                max_stock = 0
-                max_stock_idx = None
-            if price >= max_stock and i > min_stock_idx:
-                max_stock = price
-                max_stock_idx = i
-            if max_stock - min_stock >= max_profit:
-                max_profit = max_stock - min_stock
+        for price in prices:
+            if price < buy:
+                buy = price
+            elif price - buy > max_profit:
+                max_profit = price - buy
 
         return max_profit
 
