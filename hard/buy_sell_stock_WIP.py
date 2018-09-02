@@ -23,31 +23,30 @@ class Solution:
         :type prices: List[int]
         :rtype: int
         """
-        # BRUTE FORCE, O(2n)
-        # TODO: Fix edge case: [2, 4, 1] - Need to find MIN with MAX AFTER it.
-        if prices:
-            min_price_index = 0
-            min_price = prices[min_price_index]
+        max_profit = 0
 
-            max_price_index = 0
-            max_price_after = 0
+        if not prices:
+            return max_profit
 
-            for i in range(len(prices)):
-                price = prices[i]
-                if price <= min_price:
-                    min_price = price
-                    min_price_index = i
+        min_stock = prices[0]
+        min_stock_idx = 0
+        max_stock = 0
+        max_stock_idx = None
 
-            for i in range(min_price_index+1, len(prices)):
-                price = prices[i]
-                if price >= min_price and price >= max_price_after:
-                    max_price_after = price
-                    max_price_index = i
+        for i in range(len(prices)):
+            price = prices[i]
+            if price <= min_stock:
+                min_stock = price
+                min_stock_idx = i
+                max_stock = 0
+                max_stock_idx = None
+            if price >= max_stock and i > min_stock_idx:
+                max_stock = price
+                max_stock_idx = i
+            if max_stock - min_stock >= max_profit:
+                max_profit = max_stock - min_stock
 
-            if max_price_after - min_price > 0:
-                return max_price_after - min_price
-
-        return 0
+        return max_profit
 
 
 def main(args):
